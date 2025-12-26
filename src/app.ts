@@ -18,8 +18,3 @@ app.register(usersRoutes, {
 app.get('/', async () => {
   return { hello: 'world' }
 })
-
-app.listen({
-  port: 4000,
-  host: '0.0.0.0',
-})
