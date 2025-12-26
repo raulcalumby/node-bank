@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import cookie from '@fastify/cookie'
 import { transactionsRoutes } from './routes/transactions'
+import { usersRoutes } from './routes/users'
 
 export const app = fastify()
 
@@ -10,11 +11,10 @@ app.register(transactionsRoutes, {
   prefix: 'transactions',
 })
 
-app.get('/', async () => {
-  return { hello: 'world' }
+app.register(usersRoutes, {
+  prefix: 'users',
 })
 
-app.listen({
-  port: 4000,
-  host: '0.0.0.0',
+app.get('/', async () => {
+  return { hello: 'world' }
 })
