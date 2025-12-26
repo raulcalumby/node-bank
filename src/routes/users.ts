@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
+import { hash } from 'bcrypt'
 import { knex } from '../database'
 
 export async function usersRoutes(app: FastifyInstance) {
@@ -21,11 +22,14 @@ export async function usersRoutes(app: FastifyInstance) {
         return reply.status(409).send({ error: 'User already exists' })
       }
 
+      // Hash password before storing
+      const hashedPassword = await hash(password, 10)
+
       await knex('users').insert({
         id: randomUUID(),
         name,
         email,
-        password,
+        password: hashedPassword,
       })
 
       return reply.status(201).send()
